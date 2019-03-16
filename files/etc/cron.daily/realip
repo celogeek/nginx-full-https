@@ -3,6 +3,12 @@ set -e
 
 T=`mktemp`
 
+IPV4=$(curl -s -4 ip.sb)
+IPV6=$(curl -s -6 ip.sb)
+
+[ "$IPV4" == "" ] || IPV4="set_real_ip_from $IPV4;"
+[ "$IPV6" == "" ] || IPV6="set_real_ip_from $IPV6;"
+
 cat <<__EOF__>$T
 # Cloud Flare
 # Generated: `date`
@@ -15,6 +21,8 @@ cat <<__EOF__>$T
 
 # LOCAL
 set_real_ip_from 127.0.0.1;
+$IPV4
+$IPV6
 
 real_ip_header    X-Forwarded-For;
 real_ip_recursive on;
