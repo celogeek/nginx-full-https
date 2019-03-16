@@ -1,0 +1,21 @@
+server {
+	include conf.d/listen_http_default.conf;
+	server_name _;
+
+	include conf.d/ssl_checker.conf;
+
+	location / {
+		return 301 https://$host$request_uri;
+	}
+}
+
+server {
+	include conf.d/listen_https_default.conf;
+	server_name _;
+
+	ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
+	ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+
+	return 404;
+}
+
