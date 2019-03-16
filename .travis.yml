@@ -1,0 +1,5 @@
+services:
+    - docker
+
+scripts:
+    - docker build -t celogeek/nginx-full-https .
