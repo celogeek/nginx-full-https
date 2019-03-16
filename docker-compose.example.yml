@@ -11,7 +11,7 @@ services:
     volumes:
       - web.ssl:/etc/letsencrypt
       - web.www:/var/www
-      - ./sites:/etc/nginx/sites
+      - ./sites:/etc/nginx/sites:ro
     ports:
       - "80:80"
       - "443:443"
