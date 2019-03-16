@@ -3,5 +3,5 @@ language: bash
 services:
     - docker
 
-scripts:
+script:
     - docker build -t celogeek/nginx-full-https .
