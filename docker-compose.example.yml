@@ -6,7 +6,7 @@ volumes:
 
 services:
   proxy:
-    build: proxy
+    image: celogeek/nginx-full-https
     restart: always
     volumes:
       - web.ssl:/etc/letsencrypt
