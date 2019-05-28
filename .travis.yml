@@ -6,16 +6,13 @@ services:
 env:
   global:
   - REPO=${TRAVIS_REPO_SLUG}
-  - secure: IJGghKjDvgtZCUs0O9q8DVk3kyCDm0n3JEktcweXcUAjtBMhGXMHjKkGNXgIaNOZ8XZp2jYFQXv+gO6etscqAnlXCRXTGoplRG8ldTrdELzsQ788Am8AYH5GSSorOxyhQb1HG36OaIxe0XprVGcl4U3emgl/8akOU4Mf9hM34vASAVa1hz6fG5MydYgykP/O5Btg8I45XEPMBnoB8z0mrLwyCHArl0QL6V+wLTB3mIFxHNsIgUakP/3rcmLNLSuSAytrvcJHorKABW0k0POfgFl65vb13KEFxRcvPq13TJPTUsZyBDMgy+eXpxnHZRTFJ8Lopiz1g7kF4JiqjmkLcoAjcU48Q8DwTyZjUuSU8jnuVTVkFat5HlUq23VMqi4xTjdz8CZUlyaXRzbhUN19ojl+z+f14sBZvNZ01QjO798HfrB8U16lEFx7QB/+rwnTKoUkEVbQANu12acLEgyqYKwxJ8rGEcpf9MjChta7WpHd1QTX/Xtw6dYJVocCFdf4E01rz7CxqGCYQBOhkpYfoq/95fVU+uM/rUdPF2kpds62YbWrY+nLccbQtQdyl5YZ676EuQgC5boIdlPVuk5A63f6kCHCbzfJ8DiW/xZsx2eREmrKQ0QOFdVhE32ovFjIijO3QUukes2O06LanJzh493bwhEoi2A78cgFuUOhL2Y=
-  - secure: KVbFv7y/DndjovZE4YlDkFqunQciM4rK9nCfeMe8xzb6UdQbTqz/Sa9/TRpWJcL3b0thcwfEVfqSVokOX1s6rsdCMmglIQ10Oc8K/c+S08nyJInzPZ0wXzIdAtgzOJ6jQj+8jhJzLxsYrIQXo/nJCh2hYgk2G89g0iCB6mAG9liOSefwsz+KJIGx6rljyGAzFkWcP5ew03nzmM1qdK5UNdupI8Bmldte+cNuB24IP5fvoqeUpk1pWuDRUiRlXYCXTRyLdJIFuCrNDqkjuAe2kRpPrtu3D3y+zu4LMnCcGowH3U+a8YOG8WESd6mnMZ5gSUBRiT3EOCk7Sw6BYrOZLPGwiezt2KTj+BZcP5cxeG6j50atET1/q3LBpjFUqeAszr7XSsgdSoAq62uQAFZGdSfR0mCpBgCyeqk/SwdxEtNex6yIN7wg/+QvjxGxTuZubGcvn0x60NlI6HAeBxCZXIpMHV0LWgufERN+EWQgD5zDNzWERifWTcc68BPLaAj8ykzK7EJ41tFRGQ5KjrPifJeYM7/ppQG29G+t3PQnuZ3nU34SJomAe+8anGa8esFVwsQewqRH5gL7ys0QCjdsgaNvmQJHSAFSeE1UACagilAZVAUCYy7N0+cilrlnKN0NTUoYReTHX0Q3YyQcRsIFVn1UNk4VjnD0Jbptep+Na9g=
 
 script:
-  - docker pull $REPO:latest
-  - docker build --cache-from $REPO:latest -t $REPO:latest .
+  - docker build -t $REPO:latest .
 
 after_success:
     - if [ -n "$TRAVIS_TAG" ]; then
-        echo "$DOCKER_PASS" | docker login -u $DOCKER_USER --password-stdin;
+        docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
         docker tag $REPO:latest $REPO:$TRAVIS_TAG;
         docker push $REPO;
       else
